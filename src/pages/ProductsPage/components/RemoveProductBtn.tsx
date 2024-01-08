@@ -60,7 +60,7 @@ const RemoveProductBtn: React.FC<IRemoveProductBtnProps> = ({
   };
 
   return (
-    <PopupState variant='popper' popupId='demo-popup-popper'>
+    <PopupState variant='popper' popupId='demo-popup-popper' disableAutoFocus>
       {(popupState) => (
         <div>
           <Button

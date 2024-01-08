@@ -89,7 +89,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
         name='productID'
         rules={numberRules}
         defaultValue={maxProductID + 1}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value } }: any) => (
           <GlobalInput
             value={value}
             onChange={onChange}
@@ -106,7 +106,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
         control={control}
         name='shelveID'
         rules={numberRules}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value } }: any) => (
           <GlobalInput
             value={value}
             onChange={onChange}
@@ -123,7 +123,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
         control={control}
         name='width'
         rules={numberRules}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value } }: any) => (
           <GlobalInput
             value={value}
             onChange={onChange}
@@ -140,7 +140,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
         control={control}
         name='height'
         rules={numberRules}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value } }: any) => (
           <GlobalInput
             value={value}
             onChange={onChange}
@@ -157,7 +157,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
         control={control}
         name='length'
         rules={numberRules}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value } }: any) => (
           <GlobalInput
             value={value}
             onChange={onChange}
