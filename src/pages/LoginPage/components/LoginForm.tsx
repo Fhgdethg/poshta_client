@@ -7,11 +7,12 @@ import {
   Controller,
   useFormState,
 } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 import GlobalInput from '@/components/ElementsAndBlocks/GlobalInput';
 
 import { useAuthStore } from '@/store/authStore';
-import { useRouter } from 'next/navigation';
+
 import { routes } from '@/constants/routes';
 
 interface ILoginForm {
@@ -27,10 +28,10 @@ const LoginForm = () => {
     control,
   });
 
-  const redirectToHomePage = () => push(routes.root);
-
-  const onSubmit: SubmitHandler<ILoginForm> = (data) =>
-    loginAction(data, redirectToHomePage);
+  const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
+    await loginAction(data);
+    push(routes.root);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

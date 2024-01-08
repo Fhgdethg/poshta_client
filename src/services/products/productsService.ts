@@ -24,4 +24,4 @@ export const getProductUsingARobot = (productID: number) =>
   );
 
 export const removeProductByID = (productID: number) =>
-  clAPI.delete<IProduct>(`${clQKeys.products}/${productID}`);
+  clAPI<IProduct>(`${clQKeys.products}/${productID}`);

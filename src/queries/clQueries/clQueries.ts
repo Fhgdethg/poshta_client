@@ -7,8 +7,10 @@ import { clQKeys } from '@/queries/clQueries/clQKeys';
 
 let t = '';
 
-if (typeof localStorage !== 'undefined' && localStorage?.[lSKeys.t]) {
-  t = String(localStorage.getItem(lSKeys.t));
+if (typeof window !== 'undefined') {
+  if (typeof localStorage !== 'undefined' && localStorage?.[lSKeys.t]) {
+    t = String(localStorage.getItem(lSKeys.t));
+  }
 }
 
 export const clAPI = axios.create({

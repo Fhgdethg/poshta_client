@@ -26,16 +26,19 @@ const ProductsPage = () => {
   const isError = Boolean(!isLoading && error);
   const isShowNotEmptyList = Boolean(products.length && !isLoading && !error);
   const isShowEmptyList = Boolean(!products.length && !isLoading && !error);
+  const [isNotFirstRender, setIsNotFirstRender] = useState(false);
 
-  const searchAction = (searchVal: string) => {
+  const searchAction = async (searchVal: string) => {
     setQueryToUrl(searchVal, qSKeys.productSearch);
     const productID = Number(searchVal);
 
-    if (productID) getProductByIDAction(productID);
-    else if (!productID && !isLoading) getAllProductsAction();
+    if (productID && isNotFirstRender) await getProductByIDAction(productID);
+    else if (!productID && !isLoading && isNotFirstRender)
+      await getAllProductsAction();
   };
 
   useEffect(() => {
+    setIsNotFirstRender(true);
     getAllProductsAction();
   }, []);
 

@@ -9,15 +9,10 @@ import { ILoginReqBody } from '@/services/auth/authTypes';
 import { IUser } from '@/types/user';
 import { TError } from '@/types/error';
 
-type TRedirectToHomePage = () => void;
-
 export interface IAuthState {
   token: string;
   user: IUser | null;
-  loginAction: (
-    loginData: ILoginReqBody,
-    redirectToHomePage: TRedirectToHomePage,
-  ) => Promise<void>;
+  loginAction: (loginData: ILoginReqBody) => Promise<void>;
   isLoading: boolean;
   error: string;
 }
@@ -28,10 +23,7 @@ export const useAuthStore = create<IAuthState>()(
     user: null,
     isLoading: false,
     error: '',
-    loginAction: async (
-      loginData: ILoginReqBody,
-      redirectToHomePage: TRedirectToHomePage,
-    ) => {
+    loginAction: async (loginData: ILoginReqBody) => {
       try {
         set({ isLoading: true });
 
@@ -42,7 +34,6 @@ export const useAuthStore = create<IAuthState>()(
         set({ user, token });
 
         localStorage.setItem(lSKeys.t, token);
-        redirectToHomePage();
       } catch (err: TError) {
         const error = err?.message ? err.message : 'Login error';
 

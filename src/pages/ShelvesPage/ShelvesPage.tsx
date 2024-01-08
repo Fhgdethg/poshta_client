@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Box, CircularProgress } from '@mui/material';
 
 import ShelveCard from '@/pages/ShelvesPage/components/ShelveCard';
@@ -24,15 +24,17 @@ const ShelvesPage = () => {
   const isError = Boolean(!isLoading && error);
   const isShowNotEmptyList = Boolean(shelves.length && !isLoading && !error);
   const isShowEmptyList = Boolean(!shelves.length && !isLoading && !error);
+  const [isNotFirstRender, setIsNotFirstRender] = useState(false);
 
   const searchAction = (searchVal: string) => {
     const shelveID = Number(searchVal);
 
-    if (shelveID) getShelveByIDAction(shelveID);
-    else if (!shelveID && !isLoading) getAllShelvesAction();
+    if (shelveID && isNotFirstRender) getShelveByIDAction(shelveID);
+    else if (!shelveID && !isLoading && isNotFirstRender) getAllShelvesAction();
   };
 
   useEffect(() => {
+    setIsNotFirstRender(true);
     getAllShelvesAction();
   }, []);
 
@@ -52,7 +54,7 @@ const ShelvesPage = () => {
             customStyle={{ maxWidth: 400, marginBottom: 7, marginTop: 3 }}
           />
         </Box>
-        {Boolean(user && user?.role === 'admin') && <AddShelveBtn />}
+        {/*{Boolean(user && user?.role === 'admin') && <AddShelveBtn />}*/}
       </Box>
       {isError && <Alert severity='error'>{error}</Alert>}
       <Box
