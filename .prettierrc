@@ -1,0 +1,23 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "semi": true,
+  "jsxSingleQuote": true,
+  "jsxBracketSameLine": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^@/components/(.*$)",
+    "^@/hooks/(.*$)",
+    "^@/store/(.*$)",
+    "^@/helpers/(.*$)",
+    "^@/types/(.*$)",
+    "^@/api/(.*$)",
+    "^@/theme/(.*$)",
+    "^../(.*)",
+    "^./(.*)"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
