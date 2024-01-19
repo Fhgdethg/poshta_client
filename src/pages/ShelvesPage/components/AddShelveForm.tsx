@@ -11,16 +11,16 @@ import {
 
 import GlobalInput from '@/components/ElementsAndBlocks/GlobalInput';
 
-import { useProductsStore } from '@/store/productsStore';
+import { useShelvesStore } from '@/store/shelvesStore';
 
-import { addProduct } from '@/services/products/productsService';
+import { addShelve } from '@/services/shelves/shelvesService';
 
 import { getQueryByNameFromUrl } from '@/helpers/locationHelpers';
 
 import { qSKeys } from '@/constants/qSKeys';
 
 import { IAddProductReqBody } from '@/services/products/productsTypes';
-import { IProduct } from '@/types/product';
+import { IShelve } from '@/types/shelve';
 import { TError } from '@/types/error';
 
 interface IAddShelveFormProps {
@@ -28,8 +28,8 @@ interface IAddShelveFormProps {
 }
 
 const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
-  const { getProductByIDAction, getAllProductsAction, allProducts } =
-    useProductsStore();
+  const { getAllShelvesAction, getShelveByIDAction, allShelves } =
+    useShelvesStore();
 
   const { handleSubmit, control } = useForm<IAddProductReqBody>();
   const { errors } = useFormState({
@@ -38,39 +38,39 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [product, setProduct] = useState<IProduct | null>(null);
+  const [shelve, setShelve] = useState<IShelve | null>(null);
 
   const onSubmit: SubmitHandler<IAddProductReqBody> = async ({
-    productID,
     shelveID,
     width,
     height,
     length,
+    maxShelvesCount,
   }) => {
     try {
       setIsLoading(true);
       setError('');
-      setProduct(null);
+      setShelve(null);
 
-      const { data: product } = await addProduct({
-        productID,
+      const { data: shelve } = await addShelve({
         shelveID,
         width,
         height,
         length,
+        maxShelvesCount,
       });
 
-      setProduct(product);
+      setShelve(shelve);
 
-      const productSearchVal = getQueryByNameFromUrl(qSKeys.productSearch);
+      const shelveSearchVal = getQueryByNameFromUrl(qSKeys.shelveSearch);
 
-      if (product && productSearchVal)
-        getProductByIDAction(Number(productSearchVal));
-      else if (product && !productSearchVal) getAllProductsAction();
+      if (shelve && shelveSearchVal)
+        getShelveByIDAction(Number(shelveSearchVal));
+      else if (shelve && !shelveSearchVal) getAllShelvesAction();
 
       popupState.close();
     } catch (err: TError) {
-      const error = err?.message ? err.message : 'Get product error';
+      const error = err?.message ? err.message : 'Get shelve error';
 
       setError(error);
     } finally {
@@ -78,34 +78,17 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
     }
   };
 
-  const maxProductID = allProducts.reduce((maxID, product) => {
-    return Math.max(maxID, product.productID);
+  const maxShelveID = allShelves.reduce((maxID, shelve) => {
+    return Math.max(maxID, shelve.shelveID);
   }, 0);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Controller
         control={control}
-        name='productID'
-        rules={numberRules}
-        defaultValue={maxProductID + 1}
-        render={({ field: { onChange, value } }: any) => (
-          <GlobalInput
-            value={value}
-            onChange={onChange}
-            required
-            label='Product id'
-            type='number'
-            placeholder='0000'
-            customStyle={{ marginBottom: 3 }}
-            helperText={errors?.productID?.message}
-          />
-        )}
-      />
-      <Controller
-        control={control}
         name='shelveID'
         rules={numberRules}
+        defaultValue={maxShelveID + 1}
         render={({ field: { onChange, value } }: any) => (
           <GlobalInput
             value={value}
@@ -128,7 +111,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
             value={value}
             onChange={onChange}
             required
-            label='Product Width'
+            label='Shelve Width'
             type='number'
             placeholder='00'
             customStyle={{ marginBottom: 3 }}
@@ -145,7 +128,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
             value={value}
             onChange={onChange}
             required
-            label='Product Height'
+            label='Shelve Height'
             type='number'
             placeholder='00'
             customStyle={{ marginBottom: 3 }}
@@ -162,11 +145,29 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
             value={value}
             onChange={onChange}
             required
-            label='Product Length'
+            label='Shelve Length'
             type='number'
             placeholder='00'
             customStyle={{ marginBottom: 3 }}
             helperText={errors?.length?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name='maxShelvesCount'
+        defaultValue={allShelves?.length + 1}
+        rules={numberRules}
+        render={({ field: { onChange, value } }: any) => (
+          <GlobalInput
+            value={value}
+            onChange={onChange}
+            required
+            label='New shelves count'
+            type='number'
+            placeholder='0000'
+            customStyle={{ marginBottom: 3 }}
+            helperText={errors?.mawShelvesCount?.message}
           />
         )}
       />

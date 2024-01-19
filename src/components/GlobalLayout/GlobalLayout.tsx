@@ -1,12 +1,17 @@
 'use client';
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { NextFontWithVariable } from 'next/dist/compiled/@next/font';
+import { useRouter, usePathname } from 'next/navigation';
 import { CssBaseline, ThemeProvider, Container, Box } from '@mui/material';
 
 import Header from '@/components/GlobalLayout/components/Header';
 
+import { useAuthStore } from '@/store/authStore';
+
 import { basicTheme, theme } from '@/theme/theme';
+import { routes } from '@/constants/routes';
+import { lSKeys } from '@/constants/lSKeys';
 
 interface IMainLayoutProps {
   font: NextFontWithVariable;
@@ -14,6 +19,40 @@ interface IMainLayoutProps {
 }
 
 const GlobalLayout: React.FC<IMainLayoutProps> = ({ font, children }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { authAction } = useAuthStore();
+
+  const [isFirstRender, setIsFirstRender] = useState(true);
+
+  const checkAuthHandler = async () => {
+    const user = await authAction();
+
+    if (!user) {
+      router.push(routes.login);
+      localStorage.removeItem(lSKeys.t);
+    }
+  };
+
+  const isLoginPage = pathname !== routes.login;
+
+  useEffect(() => {
+    if (isFirstRender && isLoginPage) {
+      checkAuthHandler();
+      setIsFirstRender(false);
+    }
+
+    if (isLoginPage) {
+      const checkAuthInterval = setInterval(async () => {
+        await checkAuthHandler();
+      }, 10000);
+
+      return () => {
+        clearInterval(checkAuthInterval);
+      };
+    }
+  }, [pathname]);
+
   return (
     <html lang='en'>
       <body className={font.variable}>

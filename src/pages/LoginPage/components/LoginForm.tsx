@@ -30,7 +30,9 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
     await loginAction(data);
-    push(routes.root);
+    setTimeout(() => {
+      push(routes.root);
+    }, 10);
   };
 
   return (

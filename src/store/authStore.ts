@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
-import { login } from '@/services/auth/authService';
+import { auth, login } from '@/services/auth/authService';
 
 import { lSKeys } from '@/constants/lSKeys';
 
@@ -12,9 +12,10 @@ import { TError } from '@/types/error';
 export interface IAuthState {
   token: string;
   user: IUser | null;
-  loginAction: (loginData: ILoginReqBody) => Promise<void>;
   isLoading: boolean;
   error: string;
+  loginAction: (loginData: ILoginReqBody) => Promise<void>;
+  authAction: () => Promise<void>;
 }
 
 export const useAuthStore = create<IAuthState>()(
@@ -40,6 +41,21 @@ export const useAuthStore = create<IAuthState>()(
         set({ error });
       } finally {
         set({ isLoading: false });
+      }
+    },
+    authAction: async () => {
+      try {
+        const { data: user } = await auth();
+
+        set({ user });
+
+        return user;
+      } catch (err: TError) {
+        const errCode = err.response.status;
+
+        if (errCode === 401) set({ user: null });
+
+        return;
       }
     },
   })),

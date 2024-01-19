@@ -10,6 +10,10 @@ import AddShelveBtn from '@/pages/ShelvesPage/components/AddShelveBtn';
 import { useAuthStore } from '@/store/authStore';
 import { useShelvesStore } from '@/store/shelvesStore';
 
+import { setQueryToUrl } from '@/helpers/locationHelpers';
+
+import { qSKeys } from '@/constants/qSKeys';
+
 const ShelvesPage = () => {
   const {
     getAllShelvesAction,
@@ -27,6 +31,7 @@ const ShelvesPage = () => {
   const [isNotFirstRender, setIsNotFirstRender] = useState(false);
 
   const searchAction = (searchVal: string) => {
+    setQueryToUrl(searchVal, qSKeys.shelveSearch);
     const shelveID = Number(searchVal);
 
     if (shelveID && isNotFirstRender) getShelveByIDAction(shelveID);
@@ -54,7 +59,7 @@ const ShelvesPage = () => {
             customStyle={{ maxWidth: 400, marginBottom: 7, marginTop: 3 }}
           />
         </Box>
-        {/*{Boolean(user && user?.role === 'admin') && <AddShelveBtn />}*/}
+        {Boolean(user && user?.role === 'admin') && <AddShelveBtn />}
       </Box>
       {isError && <Alert severity='error'>{error}</Alert>}
       <Box

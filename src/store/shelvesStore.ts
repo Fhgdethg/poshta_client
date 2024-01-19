@@ -13,6 +13,7 @@ export interface IShelvesState {
   isLoading: boolean;
   error: string;
   shelves: IShelve[];
+  allShelves: IShelve[];
   getAllShelvesAction: () => Promise<void>;
   getShelveByIDAction: (shelveID: number) => Promise<void>;
 }
@@ -22,13 +23,14 @@ export const useShelvesStore = create<IShelvesState>()(
     isLoading: false,
     error: '',
     shelves: [],
+    allShelves: [],
     getAllShelvesAction: async () => {
       try {
         set({ isLoading: true, error: '' });
 
         const { data } = await getAllShelves();
 
-        set({ shelves: data });
+        set({ shelves: data, allShelves: data });
       } catch (err: TError) {
         const error = err?.message ? err.message : 'Login error';
 
