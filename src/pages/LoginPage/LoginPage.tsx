@@ -10,12 +10,15 @@ const LoginPage = () => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
+        padding: '0 10px',
+        width: '100%',
       }}
     >
       <Card
         elevation={3}
         sx={{
-          minWidth: 600,
+          maxWidth: 600,
+          width: '100%',
           minHeight: 420,
           display: 'flex',
           alignItems: 'center',

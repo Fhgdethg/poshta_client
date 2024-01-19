@@ -50,6 +50,9 @@ const ShelvesPage = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          '@media screen and (max-width: 900px)': {
+            flexDirection: 'column',
+          },
         }}
       >
         <Box>
@@ -67,6 +70,18 @@ const ShelvesPage = () => {
           display: 'grid',
           gridTemplateColumns: 'repeat(5, 1fr)',
           gridGap: 30,
+          '@media screen and (max-width: 1475px)': {
+            gridTemplateColumns: 'repeat(4, 1fr)',
+          },
+          '@media screen and (max-width: 1185px)': {
+            gridTemplateColumns: 'repeat(3, 1fr)',
+          },
+          '@media screen and (max-width: 970px)': {
+            gridTemplateColumns: 'repeat(2, 1fr)',
+          },
+          '@media screen and (max-width: 550px)': {
+            gridTemplateColumns: '1fr',
+          },
         }}
       >
         {isShowNotEmptyList &&

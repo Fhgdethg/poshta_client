@@ -28,7 +28,18 @@ const Header = () => {
 
   return (
     <AppBar position='relative'>
-      <Toolbar sx={{ maxWidth: 2200, margin: '0 auto', width: '100%' }}>
+      <Toolbar
+        sx={{
+          maxWidth: 2200,
+          margin: '0 auto',
+          width: '100%',
+          display: 'flex',
+          gap: '10px',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          padding: '10px 10px',
+        }}
+      >
         <Typography
           variant='body1'
           component='div'

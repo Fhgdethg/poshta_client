@@ -13,7 +13,12 @@ const AddProductBtn = () => {
           <Button
             variant='contained'
             {...bindToggle(popupState)}
-            sx={{ minWidth: 135 }}
+            sx={{
+              minWidth: 135,
+              '@media screen and (max-width: 900px)': {
+                margin: '-40px 0 20px 0',
+              },
+            }}
           >
             {popupState.isOpen ? 'Close' : 'Add Product'}
           </Button>
