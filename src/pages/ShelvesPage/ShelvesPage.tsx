@@ -85,12 +85,24 @@ const ShelvesPage = () => {
         }}
       >
         {isShowNotEmptyList &&
-          shelves.map(({ shelveID, shelveDimensions, coordinates }) => (
-            <ShelveCard
-              {...{ shelveID, shelveDimensions, coordinates }}
-              key={shelveID}
-            />
-          ))}
+          shelves.map(
+            ({
+              shelveID,
+              shelveDimensions,
+              coordinates,
+              percentBusyVolume,
+            }) => (
+              <ShelveCard
+                {...{
+                  shelveID,
+                  shelveDimensions,
+                  coordinates,
+                  percentBusyVolume,
+                }}
+                key={shelveID}
+              />
+            ),
+          )}
 
         {isShowEmptyList && 'No shelves'}
 

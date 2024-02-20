@@ -82,9 +82,11 @@ const ProductCard: React.FC<IShelveCardProps> = ({
             Product dimensions:
           </Typography>
           <Typography component='p' variant='body1'>
-            width: {productDimensions.width};<br />
-            length: {productDimensions.length};<br />
-            height: {productDimensions.height};
+            width: {productDimensions.width} sm;
+            <br />
+            length: {productDimensions.length} sm;
+            <br />
+            height: {productDimensions.height} sm;
           </Typography>
         </Box>
         <Box
@@ -101,6 +103,7 @@ const ProductCard: React.FC<IShelveCardProps> = ({
               isOneRemovePopupOpened,
               setIsOneRemovePopupOpened,
               productID,
+              setError,
             }}
           />
           <Button

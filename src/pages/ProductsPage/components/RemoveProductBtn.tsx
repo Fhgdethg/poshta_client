@@ -1,7 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Popper, Button, Fade, Paper, Typography, Box } from '@mui/material';
+import {
+  Popper,
+  Button,
+  Fade,
+  Paper,
+  Typography,
+  Box,
+  CircularProgress,
+} from '@mui/material';
 import PopupState, { bindToggle, bindPopper } from 'material-ui-popup-state';
 
 import { useProductsStore } from '@/store/productsStore';
@@ -13,35 +21,31 @@ import { getQueryByNameFromUrl } from '@/helpers/locationHelpers';
 import { qSKeys } from '@/constants/qSKeys';
 import { basicTheme } from '@/theme/theme';
 
-import { IProduct } from '@/types/product';
 import { TError } from '@/types/error';
 
 interface IRemoveProductBtnProps {
   isOneRemovePopupOpened: boolean;
   setIsOneRemovePopupOpened: (isOneRemovePopupOpened: boolean) => void;
   productID: number;
+  setError: (error: string) => void;
 }
 
 const RemoveProductBtn: React.FC<IRemoveProductBtnProps> = ({
   isOneRemovePopupOpened,
   setIsOneRemovePopupOpened,
   productID,
+  setError,
 }) => {
   const { getProductByIDAction, getAllProductsAction } = useProductsStore();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [product, setProduct] = useState<IProduct | null>(null);
 
   const removeProductHandler = async (popupState: any) => {
     try {
       setIsLoading(true);
       setError('');
-      setProduct(null);
 
       const { data: product } = await removeProductByID(productID);
-
-      setProduct(product);
 
       const productSearchVal = getQueryByNameFromUrl(qSKeys.productSearch);
 
@@ -69,6 +73,13 @@ const RemoveProductBtn: React.FC<IRemoveProductBtnProps> = ({
             {...bindToggle(popupState)}
           >
             Remove
+            {isLoading && (
+              <CircularProgress
+                color='secondary'
+                sx={{ marginLeft: 1 }}
+                size={25}
+              />
+            )}
           </Button>
           <Popper {...bindPopper(popupState)} transition placement='bottom-end'>
             {({ TransitionProps }) => {
