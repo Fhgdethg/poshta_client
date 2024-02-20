@@ -8,9 +8,14 @@ import { basicTheme } from '@/theme/theme';
 interface IGlobalLinkProps {
   children: ReactNode;
   linkHandler: () => void;
+  color: string;
 }
 
-const GlobalLink: React.FC<IGlobalLinkProps> = ({ children, linkHandler }) => {
+const GlobalLink: React.FC<IGlobalLinkProps> = ({
+  children,
+  linkHandler,
+  color,
+}) => {
   return (
     <Link
       component='button'
@@ -20,6 +25,8 @@ const GlobalLink: React.FC<IGlobalLinkProps> = ({ children, linkHandler }) => {
         '&:hover': {
           transform: 'scale(1.06)',
         },
+        color,
+        fontWeight: 700,
       }}
       variant='body1'
       underline='none'

@@ -56,16 +56,26 @@ const Header = () => {
               <GlobalLink
                 linkHandler={() => routeHandler(link.path)}
                 key={getRandomId()}
+                color={
+                  pathname === link.path
+                    ? basicTheme.success
+                    : basicTheme.textColor
+                }
               >
                 {link.pageName}
               </GlobalLink>
             ))}
-          {user && (
+          {Boolean(user && !isLoginPage) && (
             <Button
               variant='contained'
               sx={{
                 minWidth: 135,
                 background: basicTheme.white,
+                fontWeight: 700,
+                ':hover': {
+                  background: basicTheme.success,
+                  color: basicTheme.white,
+                },
               }}
               onClick={logOutHandler}
             >
