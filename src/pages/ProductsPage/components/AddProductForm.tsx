@@ -13,7 +13,10 @@ import GlobalInput from '@/components/ElementsAndBlocks/GlobalInput';
 
 import { useProductsStore } from '@/store/productsStore';
 
-import { addProduct } from '@/services/products/productsService';
+import {
+  addProduct,
+  addProductUsingARobot,
+} from '@/services/products/productsService';
 import { addReport } from '@/services/reports/reportsService';
 
 import { getQueryByNameFromUrl } from '@/helpers/locationHelpers';
@@ -24,6 +27,7 @@ import { qSKeys } from '@/constants/qSKeys';
 import { IAddProductReqBody } from '@/services/products/productsTypes';
 import { IProduct } from '@/types/product';
 import { TError } from '@/types/error';
+import { lSKeys } from '@/constants/lSKeys';
 
 interface IAddProductFormProps {
   popupState: any;
@@ -56,6 +60,11 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
       setIsLoading(true);
       setError('');
       setProduct(null);
+
+      const robotIP = localStorage.getItem(lSKeys.robotIP) || '';
+
+      const res = await addProductUsingARobot(robotIP, shelveID, productID);
+      console.log(res);
 
       const { data: product } = await addProduct({
         productID,

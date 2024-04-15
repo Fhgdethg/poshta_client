@@ -18,6 +18,15 @@ export const getAllProducts = () => clAPI<IProduct[]>(clQKeys.products);
 export const getProductByID = (productID: number) =>
   clAPI<IProduct>(`${clQKeys.products}/${productID}`);
 
+export const addProductUsingARobot = (
+  robotIP: string,
+  shelveID: number,
+  productID: number,
+) =>
+  axios.get<IGetProductUsingARobotResBody>(
+    `${process.env.R_SERVER_URL}${robotIP}${rQKeys.product}${rQKeys.add}?shelveID=${shelveID}&&productID=${productID}`,
+  );
+
 export const getProductUsingARobot = (productID: number, robotIP: string) =>
   axios.get<IGetProductUsingARobotResBody>(
     `${process.env.R_SERVER_URL}${robotIP}${rQKeys.product}${rQKeys.get}?id=${productID}`,
