@@ -11,7 +11,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Poshta',
+  title: 'Store',
   description: 'Application for robot manipulator',
 };
 export default function RootLayout({

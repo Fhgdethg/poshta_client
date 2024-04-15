@@ -84,18 +84,30 @@ const ProductsPage = () => {
         }}
       >
         {isShowNotEmptyList &&
-          products.map(({ productID, shelveID, productDimensions }) => (
-            <ProductCard
-              {...{
-                productID,
-                shelveID,
-                productDimensions,
-                isOneRemovePopupOpened,
-                setIsOneRemovePopupOpened,
-              }}
-              key={productID}
-            />
-          ))}
+          products.map(
+            ({
+              productID,
+              shelveID,
+              productDimensions,
+              productTitle,
+              productDescription,
+              productImgUrl,
+            }) => (
+              <ProductCard
+                {...{
+                  productID,
+                  shelveID,
+                  productDimensions,
+                  productTitle,
+                  productDescription,
+                  productImgUrl,
+                  isOneRemovePopupOpened,
+                  setIsOneRemovePopupOpened,
+                }}
+                key={productID}
+              />
+            ),
+          )}
 
         {isShowEmptyList && 'No products'}
 

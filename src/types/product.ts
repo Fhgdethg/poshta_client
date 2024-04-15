@@ -5,5 +5,8 @@ export interface IProduct {
   productID: number;
   productDimensions: IDimensions;
   shelveID: number;
+  productTitle?: string;
+  productDescription?: string;
+  productImgUrl?: string;
   __v: number;
 }

@@ -14,14 +14,15 @@ import GlobalInput from '@/components/ElementsAndBlocks/GlobalInput';
 import { useShelvesStore } from '@/store/shelvesStore';
 
 import { addShelve } from '@/services/shelves/shelvesService';
+import { addReport } from '@/services/reports/reportsService';
 
 import { getQueryByNameFromUrl } from '@/helpers/locationHelpers';
 
 import { qSKeys } from '@/constants/qSKeys';
 
-import { IAddProductReqBody } from '@/services/products/productsTypes';
-import { IShelve } from '@/types/shelve';
+import { IAddShelveReqBody } from '@/services/shelves/shelvesTypes';
 import { TError } from '@/types/error';
+import { generateReportBody } from '@/helpers/reportHelpers';
 
 interface IAddShelveFormProps {
   popupState: any;
@@ -31,16 +32,15 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
   const { getAllShelvesAction, getShelveByIDAction, allShelves } =
     useShelvesStore();
 
-  const { handleSubmit, control } = useForm<IAddProductReqBody>();
+  const { handleSubmit, control } = useForm<IAddShelveReqBody>();
   const { errors } = useFormState({
     control,
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [shelve, setShelve] = useState<IShelve | null>(null);
 
-  const onSubmit: SubmitHandler<IAddProductReqBody> = async ({
+  const onSubmit: SubmitHandler<IAddShelveReqBody> = async ({
     shelveID,
     width,
     height,
@@ -50,7 +50,6 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
     try {
       setIsLoading(true);
       setError('');
-      setShelve(null);
 
       const { data: shelve } = await addShelve({
         shelveID,
@@ -59,9 +58,6 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
         length,
         maxShelvesCount,
       });
-
-      setShelve(shelve);
-
       const shelveSearchVal = getQueryByNameFromUrl(qSKeys.shelveSearch);
 
       if (shelve && shelveSearchVal)
@@ -69,6 +65,11 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
       else if (shelve && !shelveSearchVal) getAllShelvesAction();
 
       popupState.close();
+
+      const addShelveReport = generateReportBody(
+        `Add shelve with id = ${shelveID}`,
+      );
+      await addReport(addShelveReport);
     } catch (err: TError) {
       const error = err?.message ? err.message : 'Get shelve error';
 
@@ -167,7 +168,7 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
             type='number'
             placeholder='0000'
             customStyle={{ marginBottom: 3 }}
-            helperText={errors?.mawShelvesCount?.message}
+            helperText={errors?.maxShelvesCount?.message}
           />
         )}
       />

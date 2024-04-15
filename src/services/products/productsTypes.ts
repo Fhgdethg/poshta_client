@@ -4,6 +4,9 @@ export interface IAddProductReqBody {
   height: number;
   length: number;
   shelveID: number;
+  productTitle?: string;
+  productDescription?: string;
+  productImgUrl?: string;
 }
 
 export interface IGetProductUsingARobotResBody {

@@ -22,6 +22,8 @@ import { qSKeys } from '@/constants/qSKeys';
 import { basicTheme } from '@/theme/theme';
 
 import { TError } from '@/types/error';
+import { generateReportBody } from '@/helpers/reportHelpers';
+import { addReport } from '@/services/reports/reportsService';
 
 interface IRemoveProductBtnProps {
   isOneRemovePopupOpened: boolean;
@@ -52,6 +54,11 @@ const RemoveProductBtn: React.FC<IRemoveProductBtnProps> = ({
       if (product && productSearchVal)
         getProductByIDAction(Number(productSearchVal));
       else if (product && !productSearchVal) getAllProductsAction();
+
+      const removeProductReport = generateReportBody(
+        `Remove product with id = ${productID}`,
+      );
+      await addReport(removeProductReport);
     } catch (err: TError) {
       const error = err?.message ? err.message : 'Remove product error';
 

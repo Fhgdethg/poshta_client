@@ -4,4 +4,7 @@ export const clQKeys = {
   login: '/login',
   shelves: '/shelves',
   products: '/products',
+  reports: '/reports',
+  byUserID: '/by-user-id',
+  byIDs: '/by-ids',
 };

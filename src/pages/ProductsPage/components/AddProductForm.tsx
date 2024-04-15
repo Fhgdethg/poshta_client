@@ -14,8 +14,10 @@ import GlobalInput from '@/components/ElementsAndBlocks/GlobalInput';
 import { useProductsStore } from '@/store/productsStore';
 
 import { addProduct } from '@/services/products/productsService';
+import { addReport } from '@/services/reports/reportsService';
 
 import { getQueryByNameFromUrl } from '@/helpers/locationHelpers';
+import { generateReportBody } from '@/helpers/reportHelpers';
 
 import { qSKeys } from '@/constants/qSKeys';
 
@@ -46,6 +48,9 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
     width,
     height,
     length,
+    productTitle,
+    productDescription,
+    productImgUrl,
   }) => {
     try {
       setIsLoading(true);
@@ -58,6 +63,9 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
         width,
         height,
         length,
+        productTitle,
+        productDescription,
+        productImgUrl,
       });
 
       setProduct(product);
@@ -69,6 +77,11 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
       else if (product && !productSearchVal) getAllProductsAction();
 
       popupState.close();
+
+      const addProductReport = generateReportBody(
+        `Add product with id = ${productID}`,
+      );
+      await addReport(addProductReport);
     } catch (err: TError) {
       const error = err?.message ? err.message : 'Get product error';
 
@@ -167,6 +180,48 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
             placeholder='00'
             customStyle={{ marginBottom: 3 }}
             helperText={errors?.length?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name='productTitle'
+        render={({ field: { onChange, value } }: any) => (
+          <GlobalInput
+            value={value}
+            onChange={onChange}
+            label='Product Title'
+            placeholder='Title'
+            customStyle={{ marginBottom: 3 }}
+            helperText={errors?.productTitle?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name='productDescription'
+        render={({ field: { onChange, value } }: any) => (
+          <GlobalInput
+            value={value}
+            onChange={onChange}
+            label='Product Description'
+            placeholder='Description'
+            customStyle={{ marginBottom: 3 }}
+            helperText={errors?.productDescription?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name='productImgUrl'
+        render={({ field: { onChange, value } }: any) => (
+          <GlobalInput
+            value={value}
+            onChange={onChange}
+            label='Product Image Url'
+            placeholder='Image Url'
+            customStyle={{ marginBottom: 3 }}
+            helperText={errors?.productImgUrl?.message}
           />
         )}
       />

@@ -9,7 +9,7 @@ import {
 import { TError } from '@/types/error';
 import { IProduct } from '@/types/product';
 
-export interface IShelvesState {
+export interface IProductsState {
   isLoading: boolean;
   error: string;
   products: IProduct[];
@@ -18,7 +18,7 @@ export interface IShelvesState {
   getProductByIDAction: (productID: number) => Promise<void>;
 }
 
-export const useProductsStore = create<IShelvesState>()(
+export const useProductsStore = create<IProductsState>()(
   immer((set, get) => ({
     isLoading: false,
     error: '',

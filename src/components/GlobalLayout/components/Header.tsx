@@ -3,6 +3,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
 
 import GlobalLink from '@/components/ElementsAndBlocks/GlobalLink';
+import RobotSettingsBtn from '@/components/GlobalLayout/components/RobotSettingsBtn';
 
 import { useAuthStore } from '@/store/authStore';
 
@@ -45,7 +46,7 @@ const Header = () => {
           component='div'
           sx={{ flexGrow: 1, fontWeight: 800, fontSize: 30 }}
         >
-          POSHTA
+          STORE
         </Typography>
         <Box
           sx={{ display: 'flex', alignItems: 'center', gap: 3 }}
@@ -82,6 +83,7 @@ const Header = () => {
               Logout
             </Button>
           )}
+          {Boolean(user && !isLoginPage) && <RobotSettingsBtn />}
         </Box>
       </Toolbar>
     </AppBar>
@@ -96,6 +98,10 @@ const navLinks = [
   {
     pageName: 'Products',
     path: routes.products,
+  },
+  {
+    pageName: 'Reports',
+    path: routes.reports,
   },
 ];
 
