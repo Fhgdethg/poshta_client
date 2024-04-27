@@ -5,8 +5,6 @@ import { Alert, Box, Button, CircularProgress } from '@mui/material';
 import ReportsTable from '@/pages/ReportsPage/components/ReportsTable';
 import { GridRowId } from '@mui/x-data-grid/models/gridRows';
 
-import ClearHistoryBtn from '@/pages/ReportsPage/components/ClearHistoryBtn';
-
 import { useReportsStore } from '@/store/reportsStore';
 
 import { deleteReportsByIds } from '@/services/reports/reportsService';
@@ -95,7 +93,6 @@ const ReportsPage = () => {
         {isError && <Alert severity='error'>{error}</Alert>}
         {isSuccessMsg && <Alert severity='success'>{successMsg}</Alert>}
 
-        <ClearHistoryBtn setSuccessMsg={setSuccessMsg} reports={reports} />
         <Button
           variant='contained'
           size='medium'

@@ -59,7 +59,7 @@ const ReportsTable: React.FC<IReportsTableProps> = ({
     >
       <DataGrid
         sx={{
-          minHeight: '70vh',
+          height: 'calc(76vh - 5px)',
         }}
         rows={rows}
         columns={columns}
