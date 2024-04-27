@@ -11,6 +11,9 @@ import { generateReportBody } from '@/helpers/reportHelpers';
 import { addReport } from '@/services/reports/reportsService';
 
 import { lSKeys } from '@/constants/lSKeys';
+import { usePathname } from 'next/navigation';
+import { routes } from '@/constants/routes';
+import { useReportsStore } from '@/store/reportsStore';
 
 interface IRobotSettingsFormProps {
   popupState: any;
@@ -23,6 +26,8 @@ interface IRobotForm {
 const RobotSettingsForm: React.FC<IRobotSettingsFormProps> = ({
   popupState,
 }) => {
+  const pathname = usePathname();
+  const { getReportsByUserIDAction } = useReportsStore();
   const { handleSubmit, control } = useForm<IRobotForm>();
   const { errors } = useFormState({
     control,
@@ -31,6 +36,8 @@ const RobotSettingsForm: React.FC<IRobotSettingsFormProps> = ({
 
   const currentIP = localStorage.getItem(lSKeys.robotIP);
   const fixedCurrentIP = currentIP || '';
+
+  const isReportsPage = pathname === routes.reports;
 
   const onSubmit = async (robotForm: IRobotForm) => {
     const oldIP = localStorage.getItem(lSKeys.robotIP);
@@ -46,6 +53,8 @@ const RobotSettingsForm: React.FC<IRobotSettingsFormProps> = ({
     setTimeout(() => {
       setIsShowSuccess(false);
     }, 4000);
+
+    if (isReportsPage) await getReportsByUserIDAction();
   };
 
   return (
