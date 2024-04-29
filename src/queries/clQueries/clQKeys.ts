@@ -1,5 +1,5 @@
 export const clQKeys = {
-  api: '/api',
+  api: 'api',
   auth: '/auth',
   login: '/login',
   shelves: '/shelves',
