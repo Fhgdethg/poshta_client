@@ -33,7 +33,7 @@ const ShelveCard: React.FC<IShelveCardProps> = ({
             Coordinates:
           </Typography>
           <Typography component='p' variant='body1'>
-            x: {coordinates.x}; y: {coordinates.y};
+            x: {coordinates?.x}; y: {coordinates?.y};
           </Typography>
         </Box>
         <Box sx={{ marginTop: 3 }}>
@@ -41,11 +41,11 @@ const ShelveCard: React.FC<IShelveCardProps> = ({
             Shelve dimensions:
           </Typography>
           <Typography component='p' variant='body1'>
-            width: {shelveDimensions.width} sm;
+            width: {shelveDimensions?.width} sm;
             <br />
-            length: {shelveDimensions.length} sm;
+            length: {shelveDimensions?.length} sm;
             <br />
-            height: {shelveDimensions.height} sm;
+            height: {shelveDimensions?.height} sm;
           </Typography>
         </Box>
       </CardContent>

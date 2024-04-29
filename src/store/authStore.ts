@@ -15,7 +15,7 @@ export interface IAuthState {
   isLoading: boolean;
   error: string;
   loginAction: (loginData: ILoginReqBody) => Promise<void>;
-  authAction: () => Promise<void>;
+  authAction: () => Promise<IUser | undefined>;
 }
 
 export const useAuthStore = create<IAuthState>()(

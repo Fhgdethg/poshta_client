@@ -61,7 +61,7 @@ const ReportsTable: React.FC<IReportsTableProps> = ({
         sx={{
           height: 'calc(76vh - 5px)',
         }}
-        rows={rows}
+        rows={rows || []}
         columns={columns}
         initialState={{
           pagination: {

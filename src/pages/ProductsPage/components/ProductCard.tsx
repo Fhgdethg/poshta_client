@@ -137,6 +137,7 @@ const ProductCard: React.FC<IShelveCardProps> = ({
                 </Typography>
               )}
               {productImgUrl && (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={`https://drive.google.com/thumbnail?id=${productImgUrl}`}
                   alt={productTitle || 'product image'}
@@ -156,11 +157,11 @@ const ProductCard: React.FC<IShelveCardProps> = ({
             Product dimensions:
           </Typography>
           <Typography component='p' variant='body1'>
-            width: {productDimensions.width} sm;
+            width: {productDimensions?.width} sm;
             <br />
-            length: {productDimensions.length} sm;
+            length: {productDimensions?.length} sm;
             <br />
-            height: {productDimensions.height} sm;
+            height: {productDimensions?.height} sm;
           </Typography>
         </Box>
         <Box

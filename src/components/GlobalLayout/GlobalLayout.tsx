@@ -13,6 +13,8 @@ import { basicTheme, theme } from '@/theme/theme';
 import { routes } from '@/constants/routes';
 import { lSKeys } from '@/constants/lSKeys';
 
+import { IUser } from '@/types/user';
+
 interface IMainLayoutProps {
   font: NextFontWithVariable;
   children: ReactNode;

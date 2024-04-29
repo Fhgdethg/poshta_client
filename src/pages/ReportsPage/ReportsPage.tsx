@@ -19,7 +19,7 @@ const ReportsPage = () => {
 
   const modifyReports = useMemo(
     () =>
-      reports.map(({ eventDescription, date, reportID }, index) => ({
+      reports?.map(({ eventDescription, date, reportID }, index) => ({
         id: index + 1,
         eventDescription,
         date,
@@ -97,7 +97,7 @@ const ReportsPage = () => {
           variant='contained'
           size='medium'
           onClick={deleteSelectedReports}
-          disabled={isLoading || !selectionRowsIDs.length}
+          disabled={isLoading || !selectionRowsIDs?.length}
         >
           Delete Selected Reports
           {isLoading && (

@@ -1,5 +1,8 @@
 import { createBrowserHistory } from 'history';
 
-const appHistory = createBrowserHistory({ window });
+let appHistory: any;
+
+if (typeof window !== 'undefined')
+  appHistory = createBrowserHistory({ window });
 
 export default appHistory;

@@ -7,7 +7,7 @@ import AddShelveForm from '@/pages/ShelvesPage/components/AddShelveForm';
 
 const AddShelveBtn = () => {
   return (
-    <PopupState variant='popper' popupId='demo-popup-popper'>
+    <PopupState variant='popper' popupId='demo-popup-popper' disableAutoFocus>
       {(popupState) => (
         <div>
           <Button
