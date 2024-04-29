@@ -32,7 +32,7 @@ const LoginForm = () => {
     await loginAction(data);
     setTimeout(() => {
       push(routes.root);
-    }, 10);
+    }, 100);
   };
 
   return (
