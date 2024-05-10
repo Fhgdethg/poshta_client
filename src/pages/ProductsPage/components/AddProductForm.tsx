@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import axios, { CancelTokenSource } from 'axios';
 import { Box, Button, Alert, CircularProgress } from '@mui/material';
 import {
   SubmitHandler,
@@ -33,6 +34,8 @@ interface IAddProductFormProps {
   popupState: any;
 }
 
+let source: CancelTokenSource;
+
 const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
   const { getProductByIDAction, getAllProductsAction, allProducts } =
     useProductsStore();
@@ -57,14 +60,19 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
     productImgUrl,
   }) => {
     try {
+      if (isLoading) return;
+
       setIsLoading(true);
       setError('');
       setProduct(null);
 
       const robotIP = localStorage.getItem(lSKeys.robotIP) || '';
 
-      const res = await addProductUsingARobot(robotIP, shelveID, productID);
-      console.log(res);
+      source = axios.CancelToken.source();
+
+      const res = await addProductUsingARobot(robotIP, shelveID, productID, {
+        cancelToken: source.token,
+      });
 
       const { data: product } = await addProduct({
         productID,
@@ -97,6 +105,13 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
       setError(error);
     } finally {
       setIsLoading(isLoading);
+    }
+  };
+
+  const submitProductFormBtnHandler = () => {
+    if (isLoading) {
+      source.cancel('Cancel query');
+      setIsLoading(false);
     }
   };
 
@@ -247,8 +262,9 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
           size='medium'
           type='submit'
           sx={{ minWidth: '100px' }}
+          onClick={submitProductFormBtnHandler}
         >
-          Add
+          {isLoading ? 'Cancel' : 'Add'}
           {isLoading && (
             <CircularProgress
               color='secondary'

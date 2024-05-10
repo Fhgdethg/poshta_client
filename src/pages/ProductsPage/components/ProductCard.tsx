@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import axios, { CancelTokenSource } from 'axios';
 import {
   Accordion,
   AccordionDetails,
@@ -39,6 +40,8 @@ interface IShelveCardProps {
   setIsOneRemovePopupOpened: (isOneRemovePopupOpened: boolean) => void;
 }
 
+let source: CancelTokenSource;
+
 const ProductCard: React.FC<IShelveCardProps> = ({
   productID,
   shelveID,
@@ -66,7 +69,11 @@ const ProductCard: React.FC<IShelveCardProps> = ({
 
       setIsLoading(true);
 
-      const { data } = await getProductUsingARobot(productID, robotIP);
+      source = axios.CancelToken.source();
+
+      const { data } = await getProductUsingARobot(productID, robotIP, {
+        cancelToken: source.token,
+      });
 
       setProduct(data);
 
@@ -81,6 +88,19 @@ const ProductCard: React.FC<IShelveCardProps> = ({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const cancelGettingProductUsingARobot = () => {
+    source.cancel('Cancel query');
+    setIsLoading(false);
+  };
+
+  const productRobotHandler = () => {
+    if (!isLoading) {
+      getProductUsingARobotHandler(productID);
+      return;
+    }
+    cancelGettingProductUsingARobot();
   };
 
   const isSuccess = Boolean(!isLoading && product?.productID && !error.length);
@@ -184,9 +204,9 @@ const ProductCard: React.FC<IShelveCardProps> = ({
           <Button
             variant='contained'
             size='medium'
-            onClick={() => getProductUsingARobotHandler(productID)}
+            onClick={productRobotHandler}
           >
-            Get
+            {isLoading ? 'Cancel' : 'Get'}
             {isLoading && (
               <CircularProgress
                 color='secondary'
