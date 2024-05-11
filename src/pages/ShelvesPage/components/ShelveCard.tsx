@@ -1,7 +1,22 @@
-import { Box, Card, CardContent, Typography } from '@mui/material';
+'use client';
+
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Typography,
+} from '@mui/material';
+
+import { useAuthStore } from '@/store/authStore';
+
+import { basicTheme } from '@/theme/theme';
 
 import { ICoordinates, IDimensions } from '@/types/sizeAndCoordinates';
-import { basicTheme } from '@/theme/theme';
+import React, { useState } from 'react';
+import RemoveShelveBtn from '@/pages/ShelvesPage/components/RemoveShelveBtn';
 
 interface IShelveCardProps {
   shelveID: number;
@@ -16,6 +31,12 @@ const ShelveCard: React.FC<IShelveCardProps> = ({
   coordinates,
   percentBusyVolume,
 }) => {
+  const { user } = useAuthStore();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [error, setError] = useState('');
+
   const percentEmptyVolume = 100 - percentBusyVolume;
 
   return (
@@ -48,6 +69,18 @@ const ShelveCard: React.FC<IShelveCardProps> = ({
             height: {shelveDimensions?.height} sm;
           </Typography>
         </Box>
+        {Boolean(user && user?.role === 'admin') && (
+          <Box
+            sx={{ marginTop: 3, display: 'flex', justifyContent: 'flex-end' }}
+          >
+            <RemoveShelveBtn shelveID={shelveID} setError={setError} />
+          </Box>
+        )}
+        {error && (
+          <Alert sx={{ marginTop: 2 }} severity='error'>
+            {error}
+          </Alert>
+        )}
       </CardContent>
     </Card>
   );
