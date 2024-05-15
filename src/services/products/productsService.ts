@@ -26,7 +26,7 @@ export const addProductUsingARobot = (
   axiosParams: { [keys: string]: any } = {},
 ) =>
   axios.get<IGetProductUsingARobotResBody>(
-    `${process.env.R_SERVER_URL}${robotIP}${rQKeys.product}${rQKeys.add}?shelveID=${shelveID}&&productID=${productID}`,
+    `${process.env.R_SERVER_URL}${robotIP}${rQKeys.product}${rQKeys.add}?shelveID=${shelveID}&productID=${productID}`,
     axiosParams,
   );
 
