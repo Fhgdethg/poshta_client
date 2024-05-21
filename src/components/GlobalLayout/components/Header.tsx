@@ -103,6 +103,10 @@ const navLinks = [
     pageName: 'Reports',
     path: routes.reports,
   },
+  {
+    pageName: 'Chat',
+    path: routes.chat,
+  },
 ];
 
 export default Header;

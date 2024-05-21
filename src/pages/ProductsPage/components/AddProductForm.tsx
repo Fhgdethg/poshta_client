@@ -110,7 +110,7 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
 
   const submitProductFormBtnHandler = () => {
     if (isLoading) {
-      source.cancel('Cancel query');
+      // source.cancel('Cancel query');
       setIsLoading(false);
     }
   };

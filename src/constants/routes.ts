@@ -3,4 +3,5 @@ export const routes = {
   products: '/products',
   reports: '/reports',
   login: '/login',
+  chat: '/chat',
 };
