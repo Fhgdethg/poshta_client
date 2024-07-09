@@ -52,11 +52,11 @@ const AddShelveForm: React.FC<IAddShelveFormProps> = ({ popupState }) => {
       setError('');
 
       const { data: shelve } = await addShelve({
-        shelveID,
-        width,
-        height,
-        length,
-        maxShelvesCount,
+        shelveID: Number(shelveID),
+        width: Number(width),
+        height: Number(height),
+        length: Number(length),
+        maxShelvesCount: Number(maxShelvesCount),
       });
       const shelveSearchVal = getQueryByNameFromUrl(qSKeys.shelveSearch);
 
