@@ -47,13 +47,12 @@ const RemoveProductBtn: React.FC<IRemoveProductBtnProps> = ({
       setIsLoading(true);
       setError('');
 
-      const { data: product } = await removeProductByID(productID);
+      await removeProductByID(productID);
 
       const productSearchVal = getQueryByNameFromUrl(qSKeys.productSearch);
 
-      if (product && productSearchVal)
-        getProductByIDAction(Number(productSearchVal));
-      else if (product && !productSearchVal) getAllProductsAction();
+      if (productSearchVal) getProductByIDAction(Number(productSearchVal));
+      else if (!productSearchVal) getAllProductsAction();
 
       const removeProductReport = generateReportBody(
         `Remove product with id = ${productID}`,

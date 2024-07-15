@@ -44,13 +44,12 @@ const RemoveShelveBtn: React.FC<IRemoveShelveBtnProps> = ({
       setIsLoading(true);
       setError('');
 
-      const { data: shelve } = await removeShelveByID(shelveID);
+      await removeShelveByID(shelveID);
 
       const shelveSearchVal = getQueryByNameFromUrl(qSKeys.shelveSearch);
 
-      if (shelve && shelveSearchVal)
-        getShelveByIDAction(Number(shelveSearchVal));
-      else if (shelve && !shelveSearchVal) getAllShelvesAction();
+      if (shelveSearchVal) getShelveByIDAction(Number(shelveSearchVal));
+      else if (!shelveSearchVal) getAllShelvesAction();
 
       const removeShelveReport = generateReportBody(
         `Remove shelve with id = ${shelveID}`,
