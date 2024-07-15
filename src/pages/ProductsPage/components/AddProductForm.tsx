@@ -75,11 +75,11 @@ const AddProductForm: React.FC<IAddProductFormProps> = ({ popupState }) => {
       });
 
       const { data: product } = await addProduct({
-        productID,
-        shelveID,
-        width,
-        height,
-        length,
+        productID: Number(productID),
+        shelveID: Number(shelveID),
+        width: Number(width),
+        height: Number(height),
+        length: Number(length),
         productTitle,
         productDescription,
         productImgUrl,
