@@ -9,7 +9,7 @@ export const addReport = (addReportBody: IAddReportReqBody) =>
   clAPI.post<IReport>(clQKeys.reports, addReportBody);
 
 export const getReportsByUserId = () =>
-  clAPI<IReport[]>(`${clQKeys.reports}${clQKeys.byUserID}`);
+  clAPI.get<IReport[]>(`${clQKeys.reports}${clQKeys.byUserID}`);
 
 export const deleteReportsByIds = (IDs: string) => {
   console.log(IDs);

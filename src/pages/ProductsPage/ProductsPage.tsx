@@ -43,7 +43,7 @@ const ProductsPage = () => {
   }, []);
 
   return (
-    <Box>
+    <Box data-testid='products-page'>
       <Box
         sx={{
           display: 'flex',

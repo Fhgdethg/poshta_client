@@ -60,7 +60,7 @@ const ChatPage = () => {
   };
 
   return (
-    <Box>
+    <Box data-testid='chat'>
       <Box
         sx={{
           display: 'flex',
